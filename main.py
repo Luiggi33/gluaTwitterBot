@@ -45,7 +45,11 @@ def tweet_random_page():
             tag.unwrap()
         tweet = tweet + description_section.text
 
-    api.update_status(tweet + url)
+    if len(tweet) + len(url) > 280:
+        tweet = tweet[:280 - len(url)] + "..."
+
+    tweet = tweet + "\n" + url
+    api.update_status(tweet)
     pages.remove(page)
 
     print("Tweeted tweet: " + tweet_title)
